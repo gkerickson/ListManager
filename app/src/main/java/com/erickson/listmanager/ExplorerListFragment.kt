@@ -31,6 +31,12 @@ class ExplorerListFragment : Fragment(R.layout.fragment_explorer_list) {
         fun onClick(index: Int)
     }
 
+    private val fragmentOnClickHandler = object: FragmentOnClick {
+        override fun onClick(index: Int) {
+            fragmentOnClick(index)
+        }
+    }
+
     private fun fragmentOnClick(index: Int) {
         Log.e("GALEN", "ExplorerListFragment fragmentOnClick")
         this.parentFragmentManager.beginTransaction()
@@ -52,15 +58,10 @@ class ExplorerListFragment : Fragment(R.layout.fragment_explorer_list) {
 
         val view = inflater.inflate(R.layout.fragment_explorer_list, container, false)
 
-        // Set the adapter
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MyExplorerListRecyclerViewAdapter(list, object : FragmentOnClick {
-                    override fun onClick(index: Int) {
-                        fragmentOnClick(index)
-                    }
-                })
+                adapter = MyExplorerListRecyclerViewAdapter(list, fragmentOnClickHandler)
             }
         }
         return view

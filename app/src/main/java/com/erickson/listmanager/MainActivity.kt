@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
 
         Log.e("GALEN", "MainActivity onCreate")
 
-        if(savedInstanceState != null) {
+        if(savedInstanceState == null) {
             Log.e("GALEN", "MainActivity adding ExplorerListFragment")
-            val bundle = bundleOf("some_int" to 0)
+            val bundle = bundleOf(ExplorerListFragment.ARG_INDEX to -1)
             supportFragmentManager.beginTransaction()
                 .setReorderingAllowed(true)
                 .add(R.id.explore_lists_fragment, ExplorerListFragment())
