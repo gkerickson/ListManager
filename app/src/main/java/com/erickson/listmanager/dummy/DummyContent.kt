@@ -49,7 +49,7 @@ object DummyContent {
         val name: String
     }
 
-    data class ToDoItem(override val id: String, override val name: String, val checked: Boolean = false) : ListableItem
+    data class ToDoItem(override val id: String, override val name: String, var checked: Boolean = false) : ListableItem
     data class ToDoList(
         override val id: String = (++COUNT).toString(),
         override val name: String,

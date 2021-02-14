@@ -1,6 +1,5 @@
 package com.erickson.listmanager.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +23,9 @@ class ToDoListRecyclerViewAdapter(
         val item = values[position]
         holder.nameView.text = item.name
         holder.checkBox.isChecked = item.checked
+        holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            values[position].checked = isChecked
+        }
         holder.itemView.setOnClickListener {
             listener.onClick()
         }
