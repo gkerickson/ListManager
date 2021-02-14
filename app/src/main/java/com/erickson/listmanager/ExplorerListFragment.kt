@@ -1,5 +1,6 @@
 package com.erickson.listmanager
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.erickson.listmanager.dummy.DummyContent
 
-class ExplorerListFragment : Fragment(R.layout.fragment_explorer_list) {
+class ExplorerListFragment : Fragment() {
     private var index = -1
 
     private val list
@@ -37,17 +38,22 @@ class ExplorerListFragment : Fragment(R.layout.fragment_explorer_list) {
         }
     }
 
+    private fun navigateToList(index: Int) {
+        startActivity(
+            Intent(activity, ToDoListActivity::class.java).apply {
+                putExtra(ARG_INDEX, index)
+            }
+        )
+    }
+
+    private fun navigateToHomeScreen() {
+        this.activity?.onBackPressed()
+    }
+
     private fun fragmentOnClick(index: Int) {
         Log.e("GALEN", "ExplorerListFragment fragmentOnClick")
-        this.parentFragmentManager.beginTransaction()
-            .replace(R.id.explore_lists_fragment, ExplorerListFragment().also {
-                it.arguments = Bundle().apply {
-                    putInt(ARG_INDEX, index)
-                }
-            }, null)
-            .setReorderingAllowed(true)
-            .addToBackStack("TEST")
-            .commit()
+        if(index > -1 && this.index == -1) navigateToList(index)
+        else navigateToHomeScreen()
     }
 
     override fun onCreateView(
@@ -60,6 +66,8 @@ class ExplorerListFragment : Fragment(R.layout.fragment_explorer_list) {
 
         if (view is RecyclerView) {
             with(view) {
+                Log.e("GALEN", "ExplorerListFragment" + list.toString())
+
                 layoutManager = LinearLayoutManager(context)
                 adapter = MyExplorerListRecyclerViewAdapter(list, fragmentOnClickHandler)
             }
@@ -72,11 +80,11 @@ class ExplorerListFragment : Fragment(R.layout.fragment_explorer_list) {
         const val ARG_INDEX = "INDEX"
 
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(index: Int) =
             ExplorerListFragment().apply {
-//                arguments = Bundle().apply {
-//                    putInt(ARG_COLUMN_COUNT, columnCount)
-//                }
+                arguments = Bundle().apply {
+                    putInt(ARG_INDEX, index)
+                }
             }
     }
 }

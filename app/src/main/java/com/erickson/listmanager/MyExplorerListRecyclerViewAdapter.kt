@@ -19,23 +19,27 @@ class MyExplorerListRecyclerViewAdapter(
     private val onClick: ExplorerListFragment.FragmentOnClick
 ) : RecyclerView.Adapter<MyExplorerListRecyclerViewAdapter.ViewHolder>() {
 
+    init {
+        Log.e("GALEN", "init: " + values.toString())
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        Log.e("GALEN", "MyExplorerListRecyclerViewAdapter.onCreateViewHolder")
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_explorer_list_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.e("GALEN", "MyExplorerListRecyclerViewAdapter.onBindViewHolder")
         val item = values[position]
         holder.idView.text = item.id
         holder.contentView.text = item.name
         holder.itemView.setOnClickListener { _ ->
             onClick.onClick(position)
-            Log.e("TEST","GOT IT - 1")
         }
         holder.contentView.setOnClickListener { _ ->
             onClick.onClick(position)
-            Log.e("TEST","GOT IT - 2")
         }
     }
 

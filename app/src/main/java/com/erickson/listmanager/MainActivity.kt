@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.findViewById<FloatingActionButton>(R.id.add_list).setOnClickListener { _ ->
-            DummyContent.createDummyItem()
+            DummyContent.createDummyList()
             (this.supportFragmentManager.findFragmentById(R.id.explore_lists_fragment)?.view as RecyclerView).adapter?.notifyDataSetChanged()
         }
     }

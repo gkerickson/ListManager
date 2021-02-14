@@ -13,21 +13,31 @@ object DummyContent {
     val LISTS: MutableList<ToDoList> = ArrayList()
 
     var COUNT = 0;
-    const val DEFAULT_COUNT = 4
+    const val DEFAULT_COUNT = 2
 
     init {
         // Add some sample items.
         for (i in 1..DEFAULT_COUNT) {
-            createDummyItem()
+            createDummyList()
         }
     }
 
-    fun createDummyItem() {
+    private fun createDummyToDo(): ToDoItem {
+        val randomChar: String = ('a' + kotlin.random.Random.nextInt()%26).toString()
+        return ToDoItem(randomChar, "TEST - $randomChar")
+    }
+
+    fun addDummyToDo(listIndex: Int) {
+        LISTS[listIndex].content.add(createDummyToDo())
+    }
+
+    fun createDummyList() {
         COUNT++
         LISTS.add(ToDoList(
-            COUNT.toString(), "Item $COUNT", listOf(
-                ToDoItem("1", "Test - 1"),
-                ToDoItem("2", "Test - 2")
+            COUNT.toString(), "Item $COUNT", mutableListOf(
+                createDummyToDo(),
+                createDummyToDo(),
+                createDummyToDo()
             )
         ))
     }
@@ -38,5 +48,5 @@ object DummyContent {
     }
 
     data class ToDoItem(override val id: String, override val name: String): ListableItem
-    data class ToDoList(override val id: String, override val name: String, val content: List<ToDoItem>): ListableItem
+    data class ToDoList(override val id: String, override val name: String, val content: MutableList<ToDoItem>): ListableItem
 }
