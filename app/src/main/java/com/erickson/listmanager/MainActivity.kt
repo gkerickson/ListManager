@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.dummy.DummyContent
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,8 +27,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.findViewById<FloatingActionButton>(R.id.add_list).setOnClickListener { _ ->
-            DummyContent.createDummyList()
-            (this.supportFragmentManager.findFragmentById(R.id.explore_lists_fragment)?.view as RecyclerView).adapter?.notifyDataSetChanged()
+//            DummyContent.createDummyList()
+            CreateListDialogFragment().apply {
+                show(supportFragmentManager, "dialog")
+            }
         }
+    }
+
+    fun onDialogPositiveClick(newListName: String) {
+        DummyContent.LISTS.add(DummyContent.ToDoList(name = newListName))
+        (this.supportFragmentManager.findFragmentById(R.id.explore_lists_fragment)?.view as RecyclerView).adapter?.notifyDataSetChanged()
     }
 }

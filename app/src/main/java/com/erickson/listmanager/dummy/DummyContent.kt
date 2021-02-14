@@ -23,7 +23,7 @@ object DummyContent {
     }
 
     private fun createDummyToDo(): ToDoItem {
-        val randomChar: String = ('a' + kotlin.random.Random.nextInt()%26).toString()
+        val randomChar: String = ('a' + kotlin.random.Random.nextInt() % 26).toString()
         return ToDoItem(randomChar, "TEST - $randomChar")
     }
 
@@ -33,20 +33,26 @@ object DummyContent {
 
     fun createDummyList() {
         COUNT++
-        LISTS.add(ToDoList(
-            COUNT.toString(), "Item $COUNT", mutableListOf(
-                createDummyToDo(),
-                createDummyToDo(),
-                createDummyToDo()
+        LISTS.add(
+            ToDoList(
+                COUNT.toString(), "Item $COUNT", mutableListOf(
+                    createDummyToDo(),
+                    createDummyToDo(),
+                    createDummyToDo()
+                )
             )
-        ))
+        )
     }
 
-    interface ListableItem{
+    interface ListableItem {
         val id: String
         val name: String
     }
 
-    data class ToDoItem(override val id: String, override val name: String): ListableItem
-    data class ToDoList(override val id: String, override val name: String, val content: MutableList<ToDoItem>): ListableItem
+    data class ToDoItem(override val id: String, override val name: String) : ListableItem
+    data class ToDoList(
+        override val id: String = (++COUNT).toString(),
+        override val name: String,
+        val content: MutableList<ToDoItem> = mutableListOf()
+    ) : ListableItem
 }
