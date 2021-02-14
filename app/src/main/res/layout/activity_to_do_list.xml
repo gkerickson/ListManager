@@ -34,9 +34,8 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/to_do_list_fragment"
-            android:name="com.erickson.listmanager.ExplorerListFragment"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/todo_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </androidx.core.widget.NestedScrollView>
