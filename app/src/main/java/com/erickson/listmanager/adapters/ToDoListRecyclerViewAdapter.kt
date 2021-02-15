@@ -2,6 +2,7 @@ package com.erickson.listmanager.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.R
 import com.erickson.listmanager.ToDoListActivity
@@ -9,7 +10,7 @@ import com.erickson.listmanager.dummy.DatabaseHandler
 import com.erickson.listmanager.viewholders.ToDoItemViewHolder
 
 class ToDoListRecyclerViewAdapter(
-    private val values: List<DatabaseHandler.TodoItem>,
+    private val itemsLiveData: LiveData<List<DatabaseHandler.TodoItem>>,
     private val listener: ToDoListActivity.ToDoListOnClick
 ) : RecyclerView.Adapter<ToDoItemViewHolder>() {
 
@@ -20,16 +21,14 @@ class ToDoListRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ToDoItemViewHolder, position: Int) {
-        val item = values[position]
-        holder.nameView.text = item.name
-        holder.checkBox.isChecked = item.checked
-        holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-//            values[position].checked = isChecked
-        }
-        holder.itemView.setOnClickListener {
-            listener.onClick()
+        itemsLiveData.value?.get(position)?.let { item ->
+            holder.nameView.text = item.name
+            holder.checkBox.isChecked = item.checked
+            holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+                listener.onClick(item.uid!!, isChecked)
+            }
         }
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = itemsLiveData.value?.size ?: 0
 }

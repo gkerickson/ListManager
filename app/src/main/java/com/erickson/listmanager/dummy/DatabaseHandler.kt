@@ -6,7 +6,7 @@ import androidx.room.*
 
 object DatabaseHandler {
 
-    private lateinit var db: AppDatabase
+    lateinit var db: AppDatabase
 
     fun setup(context: Context) {
         db = Room.databaseBuilder(
@@ -15,22 +15,28 @@ object DatabaseHandler {
         ).build()
     }
 
-    private val todoDao by lazy { db.todoDao() }
+    val todoDao by lazy { db.todoDao() }
 
-    fun addList(name: String) =
-        todoDao.insertToDoList(TodoList(null, name))
+    suspend fun addList(name: String) = todoDao.insertToDoList(TodoList(null, name))
 
-    fun getLists(): List<TodoList> = todoDao.loadLists()
+    suspend fun getList(listId: Int): TodoList = todoDao.loadList(listId)
 
-    fun addItem(name: String, checked: Boolean, listId: Int) =
+    suspend fun getLists(): List<TodoList> = todoDao.loadLists()
+
+    suspend fun addItem(name: String, checked: Boolean, listId: Int) =
         todoDao.insertToDoItem(TodoItem(null, name, checked, listId))
 
-    fun updateItem(item: TodoItem) =
-        todoDao.insertToDoItem(item)
+    suspend fun getItem(itemId: Int): TodoItem = todoDao.loadListItem(itemId)
 
-    fun getItemsForList(listId: Int): List<TodoItem> = todoDao.loadToDoItems(listId)
+    suspend fun getItemsForList(listId: Int): List<TodoItem> = todoDao.loadToDoItems(listId)
 
-    fun getItem(itemId: Int): TodoItem = todoDao.loadListItem(itemId)
+    suspend fun updateItem(itemId: Int, checked: Boolean) {
+        getItem(itemId).apply {
+            todoDao.insertToDoItem(
+                TodoItem(uid, name, checked, list_id)
+            )
+        }
+    }
 
     @VisibleForTesting
     fun reset() = db.clearAllTables()
@@ -49,7 +55,7 @@ object DatabaseHandler {
     @Entity
     data class TodoList(
         @PrimaryKey(autoGenerate = true) val uid: Int?,
-        @ColumnInfo(name="name") val name: String
+        @ColumnInfo(name = "name") val name: String
     )
 
     @Database(entities = [TodoItem::class, TodoList::class], version = 1)
@@ -60,18 +66,21 @@ object DatabaseHandler {
     @Dao
     interface TodoDao {
         @Query("SELECT * FROM TodoItem WHERE list_id is (:listId)")
-        fun loadToDoItems(listId: Int): List<TodoItem>
+        suspend fun loadToDoItems(listId: Int): List<TodoItem>
 
         @Query("SELECT * FROM TodoItem WHERE uid is (:itemId)")
-        fun loadListItem(itemId: Int): TodoItem
+        suspend fun loadListItem(itemId: Int): TodoItem
+
+        @Query("SELECT * FROM TodoList WHERE uid is (:listId)")
+        suspend fun loadList(listId: Int): TodoList
 
         @Query("SELECT * FROM TodoList")
-        fun loadLists(): List<TodoList>
+        suspend fun loadLists(): List<TodoList>
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        fun insertToDoItem(item: TodoItem)
+        suspend fun insertToDoItem(item: TodoItem)
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
-        fun insertToDoList(list: TodoList)
+        suspend fun insertToDoList(list: TodoList)
     }
 }
