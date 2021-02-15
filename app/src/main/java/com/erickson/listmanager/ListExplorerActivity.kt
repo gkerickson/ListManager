@@ -9,7 +9,8 @@ import com.erickson.listmanager.ToDoListActivity.Companion.ARG_INDEX
 import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
-import com.erickson.listmanager.dummy.DummyContent
+import com.erickson.listmanager.dummy.DatabaseHandler
+import com.erickson.listmanager.dummy.DatabaseHandler.todoDao
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListExplorerActivity : AppCompatActivity(), DialogListener {
@@ -21,10 +22,13 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        DatabaseHandler.context = applicationContext
+
         if (savedInstanceState == null) {
             this.findViewById<RecyclerView>(R.id.lists_recycler_view).let {
                 it.layoutManager = LinearLayoutManager(this)
-                it.adapter = MyExplorerListRecyclerViewAdapter(DummyContent.LISTS, object :
+                it.adapter = MyExplorerListRecyclerViewAdapter(
+                    todoDao.loadLists(), object :
                     ListExplorerOnClickListener {
                     override fun onClick(index: Int) {
                         if (index > -1)
@@ -46,7 +50,7 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
     }
 
     override fun onDialogPositiveClick(newItem: String) {
-        DummyContent.LISTS.add(DummyContent.ToDoList(name = newItem))
+//        DatabaseHandler.LISTS.add(DatabaseHandler.ToDoList(name = newItem))
         this.findViewById<RecyclerView>(R.id.lists_recycler_view).adapter?.notifyDataSetChanged()
     }
 }

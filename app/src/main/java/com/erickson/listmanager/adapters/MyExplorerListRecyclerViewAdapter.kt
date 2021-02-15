@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.ListExplorerActivity
 import com.erickson.listmanager.R
-import com.erickson.listmanager.dummy.DummyContent
+import com.erickson.listmanager.dummy.DatabaseHandler
 import com.erickson.listmanager.viewholders.ListExplorerViewHolder
 
 class MyExplorerListRecyclerViewAdapter(
-    private val values: List<DummyContent.ToDoList>,
+    private val values: List<DatabaseHandler.TodoList>,
     private val onClickListener: ListExplorerActivity.ListExplorerOnClickListener
 ) : RecyclerView.Adapter<ListExplorerViewHolder>() {
 
@@ -21,7 +21,7 @@ class MyExplorerListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ListExplorerViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
+        holder.idView.text = item.name[0].toString()
         holder.contentView.text = item.name
         holder.itemView.setOnClickListener {
             onClickListener.onClick(position)

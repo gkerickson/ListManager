@@ -1,19 +1,15 @@
 package com.erickson.listmanager
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.adapters.ToDoListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
-import com.erickson.listmanager.dummy.DummyContent
-import com.erickson.listmanager.dummy.DummyContent.addDummyToDo
+import com.erickson.listmanager.dummy.DatabaseHandler
+import com.erickson.listmanager.dummy.DatabaseHandler.todoDao
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ToDoListActivity : AppCompatActivity(), DialogListener {
     var index: Int = -1
@@ -28,12 +24,13 @@ class ToDoListActivity : AppCompatActivity(), DialogListener {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         index = intent.getIntExtra(ARG_INDEX, -1)
-        this.title = DummyContent.LISTS[index].name
+//        this.title = DatabaseHandler.LISTS[index].name
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             this.findViewById<RecyclerView>(R.id.todo_list_recycler_view).let {
                 it.layoutManager = LinearLayoutManager(this)
-                it.adapter = ToDoListRecyclerViewAdapter(DummyContent.LISTS[index].content, object :
+                it.adapter = ToDoListRecyclerViewAdapter(
+                    todoDao.loadToDoItems(index), object :
                     ToDoListOnClick {
                     override fun onClick() {
                         onBackPressed()
@@ -48,7 +45,7 @@ class ToDoListActivity : AppCompatActivity(), DialogListener {
     }
 
     override fun onDialogPositiveClick(newItem: String) {
-        DummyContent.LISTS[index].content.add(DummyContent.ToDoItem(newItem[0].toString(), newItem))
+//        DatabaseHandler.LISTS[index].content.add(DatabaseHandler.ToDoItem(newItem[0].toString(), newItem))
         this.findViewById<RecyclerView>(R.id.todo_list_recycler_view).adapter?.notifyDataSetChanged()
     }
 

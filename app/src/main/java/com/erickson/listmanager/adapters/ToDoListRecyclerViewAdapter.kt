@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.R
 import com.erickson.listmanager.ToDoListActivity
-import com.erickson.listmanager.dummy.DummyContent
+import com.erickson.listmanager.dummy.DatabaseHandler
 import com.erickson.listmanager.viewholders.ToDoItemViewHolder
 
 class ToDoListRecyclerViewAdapter(
-    private val values: List<DummyContent.ToDoItem>,
+    private val values: List<DatabaseHandler.TodoItem>,
     private val listener: ToDoListActivity.ToDoListOnClick
 ) : RecyclerView.Adapter<ToDoItemViewHolder>() {
 
@@ -24,7 +24,7 @@ class ToDoListRecyclerViewAdapter(
         holder.nameView.text = item.name
         holder.checkBox.isChecked = item.checked
         holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-            values[position].checked = isChecked
+//            values[position].checked = isChecked
         }
         holder.itemView.setOnClickListener {
             listener.onClick()
