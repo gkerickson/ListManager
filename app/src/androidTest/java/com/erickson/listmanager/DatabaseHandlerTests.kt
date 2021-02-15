@@ -2,14 +2,14 @@ package com.erickson.listmanager
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.erickson.listmanager.dummy.DatabaseHandler
-import com.erickson.listmanager.dummy.DatabaseHandler.addItem
-import com.erickson.listmanager.dummy.DatabaseHandler.addList
-import com.erickson.listmanager.dummy.DatabaseHandler.getItem
-import com.erickson.listmanager.dummy.DatabaseHandler.getItemsForList
-import com.erickson.listmanager.dummy.DatabaseHandler.getList
-import com.erickson.listmanager.dummy.DatabaseHandler.getLists
-import com.erickson.listmanager.dummy.DatabaseHandler.updateItem
+import com.erickson.listmanager.model.DatabaseHandler
+import com.erickson.listmanager.model.DatabaseHandler.addItem
+import com.erickson.listmanager.model.DatabaseHandler.addList
+import com.erickson.listmanager.model.DatabaseHandler.getItem
+import com.erickson.listmanager.model.DatabaseHandler.getItemsForList
+import com.erickson.listmanager.model.DatabaseHandler.getList
+import com.erickson.listmanager.model.DatabaseHandler.getLists
+import com.erickson.listmanager.model.DatabaseHandler.updateItem
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.Assert.*

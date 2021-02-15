@@ -1,4 +1,4 @@
-package com.erickson.listmanager.dummy
+package com.erickson.listmanager.model
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting

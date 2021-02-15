@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.R
 import com.erickson.listmanager.ToDoListActivity
-import com.erickson.listmanager.dummy.DatabaseHandler
+import com.erickson.listmanager.model.DatabaseHandler
 import com.erickson.listmanager.viewholders.ToDoItemViewHolder
 
 class ToDoListRecyclerViewAdapter(

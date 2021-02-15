@@ -11,7 +11,7 @@ import com.erickson.listmanager.ToDoListActivity.Companion.ARG_LIST_UID
 import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
-import com.erickson.listmanager.dummy.DatabaseHandler
+import com.erickson.listmanager.model.DatabaseHandler
 import com.erickson.listmanager.viewmodels.ListExplorerViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

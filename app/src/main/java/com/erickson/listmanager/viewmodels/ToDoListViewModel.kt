@@ -1,7 +1,7 @@
 package com.erickson.listmanager.viewmodels
 
 import androidx.lifecycle.*
-import com.erickson.listmanager.dummy.DatabaseHandler
+import com.erickson.listmanager.model.DatabaseHandler
 import kotlinx.coroutines.launch
 
 class ToDoListViewModel: ViewModel() {
