@@ -8,7 +8,6 @@ import com.erickson.listmanager.adapters.ToDoListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
 import com.erickson.listmanager.dummy.DatabaseHandler
-import com.erickson.listmanager.dummy.DatabaseHandler.todoDao
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ToDoListActivity : AppCompatActivity(), DialogListener {
@@ -30,7 +29,7 @@ class ToDoListActivity : AppCompatActivity(), DialogListener {
             this.findViewById<RecyclerView>(R.id.todo_list_recycler_view).let {
                 it.layoutManager = LinearLayoutManager(this)
                 it.adapter = ToDoListRecyclerViewAdapter(
-                    todoDao.loadToDoItems(index), object :
+                    DatabaseHandler.getItemsForList(index), object :
                     ToDoListOnClick {
                     override fun onClick() {
                         onBackPressed()

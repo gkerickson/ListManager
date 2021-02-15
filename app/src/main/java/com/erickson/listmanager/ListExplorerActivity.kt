@@ -10,7 +10,6 @@ import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
 import com.erickson.listmanager.dummy.DatabaseHandler
-import com.erickson.listmanager.dummy.DatabaseHandler.todoDao
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListExplorerActivity : AppCompatActivity(), DialogListener {
@@ -22,13 +21,13 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        DatabaseHandler.context = applicationContext
+        DatabaseHandler.setup(applicationContext)
 
         if (savedInstanceState == null) {
             this.findViewById<RecyclerView>(R.id.lists_recycler_view).let {
                 it.layoutManager = LinearLayoutManager(this)
                 it.adapter = MyExplorerListRecyclerViewAdapter(
-                    todoDao.loadLists(), object :
+                    DatabaseHandler.getLists(), object :
                     ListExplorerOnClickListener {
                     override fun onClick(index: Int) {
                         if (index > -1)

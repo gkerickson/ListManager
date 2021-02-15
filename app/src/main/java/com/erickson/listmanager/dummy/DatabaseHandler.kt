@@ -1,41 +1,42 @@
 package com.erickson.listmanager.dummy
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.room.*
 
 object DatabaseHandler {
-    lateinit var context: Context
 
-    val db by lazy {
-        Room.databaseBuilder(
+    private lateinit var db: AppDatabase
+
+    fun setup(context: Context) {
+        db = Room.databaseBuilder(
             context,
             AppDatabase::class.java, "database-name"
         ).build()
     }
 
-    val todoDao by lazy {
-        db.todoDao()
-    }
+    private val todoDao by lazy { db.todoDao() }
 
-    fun addList(name: String) {
+    fun addList(name: String) =
         todoDao.insertToDoList(TodoList(null, name))
-    }
 
-    fun loadLists(): List<TodoList> {
-        return todoDao.loadLists()
-    }
+    fun getLists(): List<TodoList> = todoDao.loadLists()
 
-    fun addTodo(name: String, checked: Boolean, listId: Int) {
+    fun addItem(name: String, checked: Boolean, listId: Int) =
         todoDao.insertToDoItem(TodoItem(null, name, checked, listId))
-    }
 
-    fun updateTodo(item: TodoItem) {
+    fun updateItem(item: TodoItem) =
         todoDao.insertToDoItem(item)
-    }
 
-    fun getTodosForList(listId: Int): List<TodoItem> {
-        return todoDao.loadToDoItems(listId)
-    }
+    fun getItemsForList(listId: Int): List<TodoItem> = todoDao.loadToDoItems(listId)
+
+    fun getItem(itemId: Int): TodoItem = todoDao.loadListItem(itemId)
+
+    @VisibleForTesting
+    fun reset() = db.clearAllTables()
+
+    @VisibleForTesting
+    fun teardown() = db.close()
 
     @Entity
     data class TodoItem(
@@ -60,6 +61,9 @@ object DatabaseHandler {
     interface TodoDao {
         @Query("SELECT * FROM TodoItem WHERE list_id is (:listId)")
         fun loadToDoItems(listId: Int): List<TodoItem>
+
+        @Query("SELECT * FROM TodoItem WHERE uid is (:itemId)")
+        fun loadListItem(itemId: Int): TodoItem
 
         @Query("SELECT * FROM TodoList")
         fun loadLists(): List<TodoList>
