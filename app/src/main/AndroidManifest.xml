@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ListManager">
         <activity
-            android:name=".ToDoListActivity"
+            android:name=".TodoListActivity"
             android:label="@string/title_activity_to_do_list"
             android:theme="@style/Theme.ListManager.NoActionBar" />
         <activity android:name=".ListExplorerActivity">

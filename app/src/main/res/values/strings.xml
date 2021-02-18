@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">ListManager</string>
     <string name="buttonContentDescription">TODO</string>
-    <string name="title_activity_to_do_list">ToDoListActivity</string>
-
-    <string name="add_todo_item_to_list">Add ToDo Item to List</string>
+    <string name="title_activity_to_do_list">TodoListActivity</string>
+    <string name="add_todo_item_to_list">Add Todo Item to List</string>
     <string name="title_activity_add_list">AddListActivity</string>
 </resources>

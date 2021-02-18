@@ -5,7 +5,7 @@ import androidx.room.Database
 import com.erickson.listmanager.model.DatabaseHandler
 import kotlinx.coroutines.launch
 
-class ToDoListViewModel: ViewModel() {
+class TodoListViewModel: ViewModel() {
 
     private var mutableTodoItems: MutableLiveData<List<DatabaseHandler.TodoItem>> = object: MutableLiveData<List<DatabaseHandler.TodoItem>>() {
         override fun onActive() {

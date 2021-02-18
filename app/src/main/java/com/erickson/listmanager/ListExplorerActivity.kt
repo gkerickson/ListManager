@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.erickson.listmanager.ToDoListActivity.Companion.ARG_LIST_UID
+import com.erickson.listmanager.TodoListActivity.Companion.ARG_LIST_UID
 import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
@@ -28,7 +28,7 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
                         startActivity(
                             Intent(
                                 this@ListExplorerActivity,
-                                ToDoListActivity::class.java
+                                TodoListActivity::class.java
                             ).apply {
                                 putExtra(ARG_LIST_UID, listId)
                             }

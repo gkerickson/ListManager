@@ -5,22 +5,22 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.R
-import com.erickson.listmanager.ToDoListActivity
+import com.erickson.listmanager.TodoListActivity
 import com.erickson.listmanager.model.DatabaseHandler
-import com.erickson.listmanager.viewholders.ToDoItemViewHolder
+import com.erickson.listmanager.viewholders.TodoItemViewHolder
 
-class ToDoListRecyclerViewAdapter(
+class TodoListRecyclerViewAdapter(
     private val itemsLiveData: LiveData<List<DatabaseHandler.TodoItem>>,
-    private val listener: ToDoListActivity.ToDoListOnClick
-) : RecyclerView.Adapter<ToDoItemViewHolder>() {
+    private val listener: TodoListActivity.TodoListOnClick
+) : RecyclerView.Adapter<TodoItemViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.content_add_list, parent, false)
-        return ToDoItemViewHolder(view)
+        return TodoItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ToDoItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TodoItemViewHolder, position: Int) {
         itemsLiveData.value?.get(position)?.let { item ->
             holder.itemId = item.uid!!
             holder.nameView.text = item.name
