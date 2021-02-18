@@ -3,6 +3,7 @@ package com.erickson.listmanager.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.ListExplorerActivity
 import com.erickson.listmanager.R
@@ -22,13 +23,14 @@ class MyExplorerListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ListExplorerViewHolder, position: Int) {
         listsLiveData.value?.get(position)?.let {item ->
+            holder.itemId = item.uid!!
             holder.idView.text = item.name[0].toString()
             holder.contentView.text = item.name
             holder.itemView.setOnClickListener {
-                onClickListener.onClick(item.uid!!)
+                onClickListener.onClick(item.uid)
             }
             holder.contentView.setOnClickListener {
-                onClickListener.onClick(item.uid!!)
+                onClickListener.onClick(item.uid)
             }
         }
     }

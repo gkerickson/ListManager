@@ -31,6 +31,13 @@ class ListExplorerViewModel : ViewModel() {
         }
     }
 
+    fun deleteList(listId: Int) {
+        viewModelScope.launch {
+            DatabaseHandler.deleteTodoItemList(listId)
+            refresh()
+        }
+    }
+
     private suspend fun setupExample() {
         DatabaseHandler.addList("Example List")
         DatabaseHandler.getLists()[0].uid?.let { uid ->

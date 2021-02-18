@@ -5,7 +5,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.room.*
 
 object DatabaseHandler {
-
     lateinit var db: AppDatabase
 
     fun setup(context: Context) {
@@ -36,6 +35,10 @@ object DatabaseHandler {
                 TodoItem(uid, name, checked, list_id)
             )
         }
+    }
+
+    suspend fun deleteTodoItemList(listId: Int) {
+        todoDao.deleteTodoList(getList(listId))
     }
 
     @VisibleForTesting
@@ -82,5 +85,8 @@ object DatabaseHandler {
 
         @Insert(onConflict = OnConflictStrategy.REPLACE)
         suspend fun insertToDoList(list: TodoList)
+
+        @Delete
+        suspend fun deleteTodoList(list: TodoList)
     }
 }
