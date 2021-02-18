@@ -5,6 +5,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.erickson.listmanager.model.DatabaseHandler
 import com.erickson.listmanager.model.DatabaseHandler.addItem
 import com.erickson.listmanager.model.DatabaseHandler.addList
+import com.erickson.listmanager.model.DatabaseHandler.deleteTodoItem
+import com.erickson.listmanager.model.DatabaseHandler.deleteTodoItemList
 import com.erickson.listmanager.model.DatabaseHandler.getItem
 import com.erickson.listmanager.model.DatabaseHandler.getItemsForList
 import com.erickson.listmanager.model.DatabaseHandler.getList
@@ -106,5 +108,32 @@ class DatabaseHandlerTests {
         val itemFromId = getItem(itemInList.uid!!)
 
         assertEquals(itemInList, itemFromId)
+    }
+
+    @Test
+    fun testDeletingLists() = runBlocking {
+        val lists = getLists()
+        assertEquals(1, lists.size)
+
+        deleteTodoItemList(lists[0].uid!!)
+
+        assertEquals(0, getLists().size)
+    }
+
+    @Test
+    fun testDeletingListItems() = runBlocking {
+        val listId = getLists()[0].uid!!
+        addItem(mockTodo1, true, listId)
+
+        val list = getItemsForList(listId)
+
+        assertEquals(1, list.size)
+
+        deleteTodoItem(list[0].uid!!)
+    }
+
+    @Test
+    fun testUpdateDoesntThrowExceptionWithEmptyList() = runBlocking {
+        updateItem(99, true)
     }
 }

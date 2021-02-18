@@ -1,6 +1,7 @@
 package com.erickson.listmanager.viewmodels
 
 import androidx.lifecycle.*
+import androidx.room.Database
 import com.erickson.listmanager.model.DatabaseHandler
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,13 @@ class ToDoListViewModel: ViewModel() {
     fun addItem(name: String) {
         viewModelScope.launch {
             DatabaseHandler.addItem(name, false, SELECTED_LIST_UID)
+            refreshItems()
+        }
+    }
+
+    fun deleteItem(itemId: Int) {
+        viewModelScope.launch {
+            DatabaseHandler.deleteTodoItem(itemId)
             refreshItems()
         }
     }

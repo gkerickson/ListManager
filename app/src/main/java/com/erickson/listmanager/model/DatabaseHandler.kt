@@ -25,12 +25,12 @@ object DatabaseHandler {
     suspend fun addItem(name: String, checked: Boolean, listId: Int) =
         todoDao.insertToDoItem(TodoItem(null, name, checked, listId))
 
-    suspend fun getItem(itemId: Int): TodoItem = todoDao.loadListItem(itemId)
+    suspend fun getItem(itemId: Int): TodoItem? = todoDao.loadListItem(itemId)
 
     suspend fun getItemsForList(listId: Int): List<TodoItem> = todoDao.loadToDoItems(listId)
 
     suspend fun updateItem(itemId: Int, checked: Boolean) {
-        getItem(itemId).apply {
+        getItem(itemId)?.apply {
             todoDao.insertToDoItem(
                 TodoItem(uid, name, checked, list_id)
             )
@@ -39,6 +39,10 @@ object DatabaseHandler {
 
     suspend fun deleteTodoItemList(listId: Int) {
         todoDao.deleteTodoList(getList(listId))
+    }
+
+    suspend fun deleteTodoItem(listId: Int) {
+        getItem(listId)?.let { todoDao.deleteTodoItem(it) }
     }
 
     @VisibleForTesting
@@ -88,5 +92,8 @@ object DatabaseHandler {
 
         @Delete
         suspend fun deleteTodoList(list: TodoList)
+
+        @Delete
+        suspend fun deleteTodoItem(item: TodoItem)
     }
 }

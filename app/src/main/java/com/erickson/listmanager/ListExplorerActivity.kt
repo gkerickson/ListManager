@@ -13,6 +13,7 @@ import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
 import com.erickson.listmanager.dialogs.DialogListener
 import com.erickson.listmanager.model.DatabaseHandler
+import com.erickson.listmanager.touch.SwipeHelperCallback
 import com.erickson.listmanager.viewholders.ListExplorerViewHolder
 import com.erickson.listmanager.viewmodels.ListExplorerViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -51,33 +52,22 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
             this.findViewById<RecyclerView>(R.id.lists_recycler_view).also {
                 it.layoutManager = LinearLayoutManager(this)
                 it.adapter = adapter
-                ItemTouchHelper(CustomTouchHelper()).attachToRecyclerView(it)
+                ItemTouchHelper(object: SwipeHelperCallback() {
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        viewModel.deleteList((viewHolder as ListExplorerViewHolder).itemId)
+                    }
+                }).attachToRecyclerView(it)
             }
         }
 
         viewModel.lists.observe(this, Observer {
-            this.findViewById<RecyclerView>(R.id.lists_recycler_view).adapter?.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         })
 
         this.findViewById<FloatingActionButton>(R.id.add_list).setOnClickListener {
             CreateListDialogFragment().apply {
                 show(supportFragmentManager, null)
             }
-        }
-    }
-
-    private inner class CustomTouchHelper :
-        ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            viewModel.deleteList((viewHolder as ListExplorerViewHolder).itemId)
         }
     }
 

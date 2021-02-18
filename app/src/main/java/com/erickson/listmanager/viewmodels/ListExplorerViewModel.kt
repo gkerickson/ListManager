@@ -39,8 +39,22 @@ class ListExplorerViewModel : ViewModel() {
     }
 
     private suspend fun setupExample() {
-        DatabaseHandler.addList("Example List")
+        DatabaseHandler.addList("Example List 1")
         DatabaseHandler.getLists()[0].uid?.let { uid ->
+            DatabaseHandler.addItem("Example complete to-do item", true, uid)
+            DatabaseHandler.addItem("Example incomplete to-do item", false, uid)
+            DatabaseHandler.addItem("Other things to take care of", false, uid)
+        }
+
+        DatabaseHandler.addList("Example List 2")
+        DatabaseHandler.getLists()[1].uid?.let { uid ->
+            DatabaseHandler.addItem("Example complete to-do item", true, uid)
+            DatabaseHandler.addItem("Example incomplete to-do item", false, uid)
+            DatabaseHandler.addItem("Other things to take care of", false, uid)
+        }
+
+        DatabaseHandler.addList("Example List 3")
+        DatabaseHandler.getLists()[2].uid?.let { uid ->
             DatabaseHandler.addItem("Example complete to-do item", true, uid)
             DatabaseHandler.addItem("Example incomplete to-do item", false, uid)
             DatabaseHandler.addItem("Other things to take care of", false, uid)

@@ -22,10 +22,11 @@ class ToDoListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ToDoItemViewHolder, position: Int) {
         itemsLiveData.value?.get(position)?.let { item ->
+            holder.itemId = item.uid!!
             holder.nameView.text = item.name
             holder.checkBox.isChecked = item.checked
             holder.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                listener.onClick(item.uid!!, isChecked)
+                listener.onClick(item.uid, isChecked)
             }
         }
     }
