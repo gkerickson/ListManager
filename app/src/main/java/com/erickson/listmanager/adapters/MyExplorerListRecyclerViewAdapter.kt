@@ -24,7 +24,7 @@ class MyExplorerListRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ListExplorerViewHolder, position: Int) {
         listsLiveData.value?.get(position)?.let {item ->
             holder.itemId = item.uid!!
-            holder.idView.text = item.name[0].toString()
+            holder.idView.text = (position+1).toString()
             holder.contentView.text = item.name
             holder.itemView.setOnClickListener {
                 onClickListener.onClick(item.uid)
