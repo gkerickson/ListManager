@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.erickson.listmanager.TodoListActivity.Companion.ARG_LIST_TITLE
 import com.erickson.listmanager.TodoListActivity.Companion.ARG_LIST_UID
 import com.erickson.listmanager.adapters.MyExplorerListRecyclerViewAdapter
 import com.erickson.listmanager.dialogs.CreateListDialogFragment
@@ -23,7 +24,7 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
     private val adapter: MyExplorerListRecyclerViewAdapter by lazy {
         MyExplorerListRecyclerViewAdapter(
             viewModel.lists, object : ListExplorerOnClickListener {
-                override fun onClick(listId: Int) {
+                override fun onClick(listId: Int, listName: String) {
                     if (listId > -1)
                         startActivity(
                             Intent(
@@ -31,6 +32,7 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
                                 TodoListActivity::class.java
                             ).apply {
                                 putExtra(ARG_LIST_UID, listId)
+                                putExtra(ARG_LIST_TITLE, listName)
                             }
                         )
                 }
@@ -38,7 +40,7 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
     }
 
     interface ListExplorerOnClickListener {
-        fun onClick(listId: Int)
+        fun onClick(listId: Int, listName: String)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

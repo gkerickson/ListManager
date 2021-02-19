@@ -36,11 +36,9 @@ class TodoListActivity : AppCompatActivity(), DialogListener {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         TodoListViewModel.SELECTED_LIST_UID = intent.getIntExtra(ARG_LIST_UID, -1)
+        this.title = intent.getStringExtra(ARG_LIST_TITLE)
 
         viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
-        viewModel.listTitle.observe(this, Observer {
-            this.title = it
-        })
 
         if (savedInstanceState == null) {
             this.findViewById<RecyclerView>(R.id.todo_list_recycler_view).let {
@@ -68,5 +66,6 @@ class TodoListActivity : AppCompatActivity(), DialogListener {
 
     companion object {
         const val ARG_LIST_UID: String = "UID"
+        const val ARG_LIST_TITLE: String = "TITLE"
     }
 }

@@ -27,10 +27,10 @@ class MyExplorerListRecyclerViewAdapter(
             holder.idView.text = (position+1).toString()
             holder.contentView.text = item.name
             holder.itemView.setOnClickListener {
-                onClickListener.onClick(item.uid)
+                onClickListener.onClick(item.uid, item.name)
             }
             holder.contentView.setOnClickListener {
-                onClickListener.onClick(item.uid)
+                onClickListener.onClick(item.uid, item.name)
             }
         }
     }
