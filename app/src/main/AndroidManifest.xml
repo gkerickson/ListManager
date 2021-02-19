@@ -11,8 +11,7 @@
         android:theme="@style/Theme.ListManager">
         <activity
             android:name=".TodoListActivity"
-            android:label="@string/title_activity_to_do_list"
-            android:theme="@style/Theme.ListManager.NoActionBar" />
+            android:label="@string/title_activity_to_do_list" />
         <activity android:name=".ListExplorerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

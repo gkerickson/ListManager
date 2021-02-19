@@ -46,15 +46,16 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        DatabaseHandler.setup(applicationContext)
+        setSupportActionBar(findViewById(R.id.explorer_toolbar))
 
+        DatabaseHandler.setup(applicationContext)
         viewModel = ViewModelProvider(this).get(ListExplorerViewModel::class.java)
 
         if (savedInstanceState == null) {
             this.findViewById<RecyclerView>(R.id.lists_recycler_view).also {
                 it.layoutManager = LinearLayoutManager(this)
                 it.adapter = adapter
-                ItemTouchHelper(object: SwipeHelperCallback() {
+                ItemTouchHelper(object : SwipeHelperCallback() {
                     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                         viewModel.deleteList((viewHolder as ListExplorerViewHolder).itemId)
                     }
