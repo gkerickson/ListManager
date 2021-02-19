@@ -133,7 +133,7 @@ class DatabaseHandlerTests {
     }
 
     @Test
-    fun testUpdateDoesntThrowExceptionWithEmptyList() = runBlocking {
+    fun testUpdateDoesNotThrowExceptionWithEmptyList() = runBlocking {
         updateItem(99, true)
     }
 }

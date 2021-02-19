@@ -14,7 +14,7 @@ object DatabaseHandler {
         ).build()
     }
 
-    val todoDao by lazy { db.todoDao() }
+    private val todoDao by lazy { db.todoDao() }
 
     suspend fun addList(name: String) = todoDao.insertTodoList(TodoList(null, name))
 

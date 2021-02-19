@@ -3,7 +3,6 @@ package com.erickson.listmanager.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.erickson.listmanager.ListExplorerActivity
 import com.erickson.listmanager.R
