@@ -45,7 +45,7 @@ class ListExplorerActivity : AppCompatActivity(), DialogListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_list_explorer)
         setSupportActionBar(findViewById(R.id.explorer_toolbar))
 
         DatabaseHandler.setup(applicationContext)
