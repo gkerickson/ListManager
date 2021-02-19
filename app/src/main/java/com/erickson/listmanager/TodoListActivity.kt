@@ -2,6 +2,7 @@ package com.erickson.listmanager
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -33,7 +34,13 @@ class TodoListActivity : AppCompatActivity(), DialogListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_to_do_list)
-        setSupportActionBar(findViewById(R.id.toolbar))
+
+        findViewById<Toolbar>(R.id.toolbar).let {
+            setSupportActionBar(it)
+            it.setNavigationOnClickListener {
+                this.onBackPressed()
+            }
+        }
 
         TodoListViewModel.SELECTED_LIST_UID = intent.getIntExtra(ARG_LIST_UID, -1)
         this.title = intent.getStringExtra(ARG_LIST_TITLE)
